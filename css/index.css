@@ -1,0 +1,956 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'webfont';
+    src: url('webfont.eot');
+    /* IE9*/
+    src: url('webfont.eot?#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */
+        url('webfont.woff') format('woff'),
+        /* chrome、firefox */
+        url('webfont.ttf') format('truetype'),
+        /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+        url('webfont.svg#webfont') format('svg');
+    /* iOS 4.1- */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: none;
+}
+
+.clearfix:after {
+
+    content: ".";
+
+    display: block;
+
+    height: 0;
+
+    clear: both;
+
+    visibility: hidden;
+
+}
+
+/* Hides from IE-mac \*/
+
+* html .clearfix {
+    height: 1%;
+}
+
+/* End hide from IE-mac */
+
+body {
+    font-size: 14px;
+    font-family: "微软雅黑", "microsoft yahei", PingFangSC-light;
+    background-color: rgb(255, 255, 255);
+}
+
+.p-content {
+    min-width: 1000px;
+    width: 1000px;
+    display: block;
+    margin: 0 auto;
+}
+
+.content {
+    min-width: 1270px;
+    width: 1270px;
+    display: block;
+    margin: 0 auto;
+}
+
+.top {
+    padding-bottom: 20px;
+    background-image: url(../images/top_bg.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    height: 200px;
+}
+
+.top form {
+    text-align: right;
+}
+
+.tip ul {
+    float: right;
+}
+
+.tip ul li {
+    float: left;
+    padding: 10px 5px;
+}
+
+.tip ul li a {
+    color: white;
+}
+
+.tip ul li a:hover {
+    text-decoration: underline;
+}
+
+.nav {
+    height: 48px;
+    background: #135A90;
+}
+
+.nav ul li {
+    float: left;
+    width: 11%;
+    text-align: center;
+}
+
+.nav ul li a {
+    color: white;
+    font-size: 18px;
+    line-height: 48px;
+}
+
+.nav ul li a:hover {
+    font-weight: bold;
+}
+
+.footer {
+    padding: 5px;
+    color: white;
+    font-size: 14px;
+}
+
+.footer dl img {
+    width: 100px;
+    height: 100px;
+}
+
+.footer dl {
+    text-align: center;
+}
+
+.footer p {
+    text-align: right;
+    line-height: 36px;
+}
+
+.btn-zixun {
+    width: 50px;
+    height: 150px;
+    position: fixed;
+    top: 41%;
+    left: 0px;
+    text-align: center;
+    background-color: rgb(15, 115, 191);
+    border: 0px;
+    border-radius: 0 10px 10px 0
+}
+
+.btn-zixun:hover {
+    cursor: pointer;
+    background-color: rgb(48, 131, 194);
+
+}
+
+.btn-zixun p {
+    padding-top: 5px;
+    color: white;
+    font-size: 17px;
+    line-height: 25px;
+}
+
+.login-bg {
+    background: url(../images/login-bg.jpg) no-repeat;
+    background-size: 100%;
+}
+
+.login {
+    padding-top: 200px
+}
+
+.login-panel {
+    margin: auto;
+    height: 350px;
+    width: 350px;
+}
+
+.login-title {
+    background: rgb(255, 255, 255);
+    height: 70px;
+    border-radius: 10px 10px 0 0;
+}
+
+.login-title h3 {
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    font-size: 22px;
+}
+
+.login-content {
+    background: #FFFFFF;
+    border-radius: 0 0 10px 10px;
+
+}
+
+.login-content div span {
+    line-height: 25px
+}
+
+.login-content div input {
+    margin-top: 10px;
+    height: 30px
+}
+
+.login-content button {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 14px;
+    border: 1px solid rgb(212, 212, 212);
+    background: none;
+}
+
+.login-content button:hover {
+    cursor: pointer;
+    border: 1px solid rgb(51, 171, 160);
+    background: rgb(235, 235, 235);
+}
+
+.login-content-footer {
+    margin-top: 10px;
+}
+
+.login a {
+    color: rgb(39, 168, 180)
+}
+
+.login a:hover {
+    color: rgb(39, 114, 184)
+}
+
+.register-form input {
+    width: 250px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.layui-form-item {
+    margin-top: 25px
+}
+
+.news {
+    line-height: 30px;
+}
+
+.news a {
+    color: rgb(7, 87, 147)
+}
+
+.news a:hover {
+    color: rgb(250, 86, 65)
+}
+
+.news li span {
+    color: rgb(7, 87, 147);
+    float: right;
+}
+
+.text-card {
+    text-align: center;
+    height: 70px;
+    line-height: 30px;
+    border-radius: 5px
+}
+
+.text-card div a:hover {
+    color: rgb(35, 144, 245)
+}
+
+.report {
+    margin-top: 10px;
+    background-color: rgb(15, 115, 191);
+}
+
+.report:hover {
+    background-color: rgb(59, 137, 197);
+}
+
+.card-title {
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid rgb(204, 204, 204);
+}
+
+.card-title a {
+    color: rgb(22, 95, 151);
+}
+
+.ul-city {
+    list-style: none;
+    width: auto;
+}
+
+.ul-city li {
+    float: left;
+    width: 82px;
+}
+
+.ul-city li a {
+    color: rgb(7, 87, 147)
+}
+
+.ul-city li a:hover {
+    color: rgb(250, 86, 65)
+}
+
+.img-ul {
+    margin-top: 20px;
+}
+
+.img-ul li {
+    margin-top: 20px;
+}
+
+
+
+
+.class-fenlei {
+    margin-top: 40px;
+    margin-left: 40px;
+    margin-right: 60px
+}
+
+.class-fenlei i {
+    float: left;
+    font-size: 40px;
+    margin-right: 5px;
+    color: rgb(92, 91, 91);
+}
+
+.class-fenlei h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.class-fenlei p {
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.class-items {
+    margin-top: 50px;
+    margin-left: 60px;
+    margin-right: 60px
+}
+
+.class-items div h2 {
+    float: left;
+    font-size: 22px;
+    color: rgb(75, 75, 75)
+}
+
+.class-items div a {
+    line-height: 35px;
+    font-size: 13px;
+    float: right;
+    margin-right: 45px
+}
+
+.class-items ul li {
+    float: left;
+    width: 240px;
+    margin-top: 20px;
+    margin-right: 35px;
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 18px;
+    box-shadow: 5px 5px 5px rgb(160, 160, 160)
+}
+
+.class-items ul li hr {
+    border: none;
+    background-color: rgb(221, 221, 221);
+    margin: 0px;
+    height: 1px
+}
+
+.class-items-top {
+    height: 180px;
+    background-image: url(../images/class_demo.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    border-radius: 18px 18px 0 0;
+    text-align: center;
+}
+
+.class-items-top i {
+    line-height: 180px;
+    font-size: 60px;
+    border: 15px;
+    color: rgb(132, 144, 250);
+}
+
+.class-items-bottom {
+    height: 60px;
+    padding-left: 15px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0 0 18px 18px;
+}
+
+.class-bangdan {
+    margin-top: 50px;
+    left: -45px;
+}
+
+.class-bangdan h2 {
+    float: left;
+    font-size: 22px;
+    color: rgb(75, 75, 75)
+}
+
+.class-bangdan .layui-row a {
+    line-height: 30px;
+    font-size: 13px;
+    margin-right: 100px;
+    float: right;
+}
+
+.class-bangdan ul li {
+    margin-top: 15px
+}
+
+.class-bangdan ul li span {
+    float: left;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgb(206, 206, 206);
+    text-align: center;
+    line-height: 30px;
+
+}
+
+.class-bangdan ul {
+    margin-top: 25px;
+}
+
+.class-bangdan ul li a {
+    margin-left: 20px;
+    line-height: 30px;
+    color: rgb(104, 104, 104)
+}
+
+.class-bangdan ul li a:hover {
+    color: rgb(6, 190, 181);
+}
+
+.class-meeting {
+    margin-top: 25px;
+}
+
+.class-meeting h2 {
+    font-size: 22px;
+    color: rgb(75, 75, 75)
+}
+
+.class-meeting div img {
+    width: 100%;
+}
+
+.class-meeting button {
+    margin-right: 50px;
+    width: 80px;
+    height: 40px;
+    background: none;
+    border: 2px solid rgb(156, 155, 155);
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px rgb(176, 176, 177)
+}
+
+.class-meeting button:hover {
+    background: rgb(228, 229, 230);
+    cursor: pointer;
+}
+
+.voice-platform h2 {
+    margin-top: 10px
+}
+
+
+.platform-card {
+    margin-top: 15px;
+    background-color: white;
+    border: 2px solid rgb(206, 206, 206);
+    border-radius: 3px;
+}
+
+.platform-card div div img {
+    width: 100%;
+    height: 100%;
+}
+
+.platform-card p {
+    text-indent: 2em;
+    font-size: 14px;
+    color: rgb(104, 104, 104)
+}
+
+.platform-btn {
+    width: 100px;
+    height: 30px;
+    float: right;
+    margin-right: 10px;
+    background: none;
+    border: 2px solid rgb(206, 206, 206);
+    border-radius: 3px;
+}
+
+.platform-btn:hover {
+    background: rgb(221, 221, 221);
+    cursor: pointer;
+}
+
+.voicing-news {
+    margin-top: 30px;
+}
+
+.card {
+    margin-right: 30px;
+    background-color: white;
+    border: 2px solid rgb(206, 206, 206);
+    width: 610px;
+    float: left;
+}
+
+.card-top {
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    margin-left: 15px
+}
+
+.card hr {
+    border: none;
+    background-color: rgb(148, 147, 147);
+    margin: 0px;
+    height: 1px;
+}
+
+.card ul {
+    line-height: 35px;
+    padding: 10px;
+}
+
+.card ul li span {
+    float: right;
+    margin-right: 10px
+}
+
+.voicing-news .card ul li a:hover {
+    color: #135A90
+}
+
+.entering-intro-card {
+    padding: 10px;
+    border: 1px solid rgb(198, 217, 239);
+    border-top: 2px solid rgb(39, 100, 156);
+    background-color: white;
+}
+
+.ul-name {
+    list-style: none;
+    width: 400px;
+}
+
+.ul-name li a:hover {
+    color: #2987b3
+}
+
+.ul-name li {
+    width: 80px;
+    margin: 0;
+    float: left;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.ul-intro {
+    margin-top: 5px;
+    line-height: 35px;
+    font-size: 17px
+}
+
+.ul-intro a:hover {
+    color: #2987b3
+}
+
+.meeting-biaoqing {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 2px solid rgb(206, 206, 206)
+}
+
+.meeting-biaoqing ul {
+    margin-left: 30px;
+    list-style: none;
+    text-align: center;
+}
+
+.meeting-biaoqing ul li {
+    float: left;
+    width: 50px;
+}
+
+.meeting-biaoqing ul li i {
+    font-size: 25px;
+}
+
+.meeting-biaoqing ul li i:hover {
+    color: aqua;
+    cursor: pointer;
+}
+
+.meeting-btn-send {
+    width: 15%;
+    height: 34px;
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+    background: none;
+    border: 1px solid #3cbaf5;
+}
+
+.meeting-btn-send:hover {
+    background: #3cbaf5;
+    cursor: pointer;
+}
+
+.report-demo1-textTitle {
+    text-align: center
+}
+
+.report-demo1-textTitle h1 {
+    font-size: 24px;
+    line-height: 50px;
+
+}
+
+.report-demo1-textTitle p {
+    font-size: 15px;
+    line-height: 30px;
+    margin-top: 40px;
+}
+
+.report-demo1-text hr {
+    background: rgb(192, 192, 192)
+}
+
+.report-demo1-textContent {
+    padding: 10px;
+}
+
+.report-demo1-textContent p {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    text-indent: 2em;
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.report-demo-right-news {
+    line-height: 35px;
+    padding: 10px
+}
+
+.report-demo-right-news h4 {
+    font-size: 18px;
+    font-weight: 600;
+    float: left;
+    margin-left: 10px
+}
+
+.report-demo-right-news ul {
+    margin-top: 10px
+}
+
+.report-demo-right-news ul li i {
+    font-size: 10px
+}
+
+.report-demo-right-news a:hover {
+    color: #2c708f
+}
+
+.report-demo-right-imgs {
+    margin-top: 30px;
+    line-height: 35px;
+    padding: 10px
+}
+
+.report-demo-right-imgs h4 {
+    font-size: 18px;
+    font-weight: 600;
+    float: left;
+    margin-left: 10px
+}
+
+.report-demo-right-imgs div img {
+    width: 100%;
+    height: 100%;
+}
+
+.report-demo-right-imgs-title {
+    margin-top: 20px;
+    line-height: 20px;
+    font-size: 16px;
+}
+
+.report-demo-right-imgs-data {
+    line-height: 25px;
+    font-size: 13px;
+    color: rgb(138, 138, 139)
+}
+
+.report-demo-right-imgs a:hover {
+    color: #2c708f
+}
+
+.sign-up {
+    margin-top: 50px;
+    text-align: center
+}
+
+.sign-up button {
+    margin-right: 25px;
+    width: 150px;
+    height: 50px;
+    background: none;
+    border: 2px solid rgb(156, 155, 155);
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px rgb(176, 176, 177)
+}
+
+.sign-up button:hover {
+    background: rgb(228, 229, 230);
+    cursor: pointer;
+}
+
+.ul-bq li {
+    padding: 0 20px 0 20px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 12px;
+    background: none;
+    border: 1px solid #00CC99;
+    box-shadow: 0 0 2px #00CC99;
+    float: left;
+    margin-right: 20px;
+}
+
+.ul-bq li:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #00CC99;
+}
+
+.ul-user li {
+    float: left;
+    width: 50%;
+    line-height: 45px;
+}
+
+/*学术前沿日历样式复写*/
+#calendar .layui-laydate-main {
+    width: 620px;
+}
+
+#calendar .layui-laydate-content td,
+#test-n1 .layui-laydate-content th {
+    width: 87px;
+    height: 20px;
+}
+
+.vocing-msg-list {
+    width: 300px;
+    height: 500px;
+    background-color: rgb(249, 249, 249);
+    float: left;
+}
+
+.vocing-msg-list div {
+
+    height: 70px;
+    line-height: 70px;
+    padding: 0 5px 0 60px;
+    font-size: 18px;
+    border: 1px solid rgb(204, 204, 204);
+
+
+}
+
+.vocing-msg-list div i {
+    font-size: 25px;
+    margin-right: 5px;
+}
+
+.vocing-msg-list-active {
+    cursor: pointer;
+    color: white;
+    background-color: rgb(72, 129, 216);
+}
+
+.vocing-msg-list div:hover {
+    cursor: pointer;
+    color: white;
+    background-color: rgb(72, 129, 216);
+}
+
+.vocing-msg-send {
+    float: left;
+    width: 930px;
+    margin-left: 25px;
+}
+
+.vocing-msg-send .title {
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    padding-left: 20px;
+    background-color: rgb(223, 223, 223);
+}
+
+.vocing-msg-send .title span i {
+    font-size: 23px;
+    margin-right: 10px
+}
+
+.vocing-msg-send form label {
+    font-size: 15px;
+}
+
+.vocing-msg-send textarea {
+    resize: none;
+    height: 220px
+}
+
+.code {
+    font-family: Arial;
+    font-style: italic;
+    color: blue;
+    font-size: 30px;
+    border: 0;
+    padding: 2px 3px;
+    letter-spacing: 3px;
+    font-weight: bolder;
+    float: left;
+    cursor: pointer;
+    width: 150px;
+    height: 35px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #D8B7E3;
+}
+
+.life-card {
+    margin-top: 20px
+}
+
+.book-list li {
+    float: left;
+    margin-right: 10px;
+    width: 140px;
+
+}
+
+.book-list li img {
+    width: 100%;
+    height: 180px;
+}
+
+.book-menu {
+    width: 250px;
+    float: left;
+    box-shadow: 5px 5px 5px rgb(212, 212, 212)
+}
+
+.book-menu-item {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px
+}
+
+.book-menu-item:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 5px #ccc;
+}
+
+.ul-books {
+    margin-top: 70px
+}
+
+.ul-books li {
+    float: left;
+    width: 198px;
+    padding: 20px 20px 20px 20px;
+    border: 1px solid rgb(223, 221, 221)
+}
+
+.ul-books li img {
+    width: 198px;
+    height: 250px;
+}
+
+.book-intro {
+    margin-top: 10px;
+    height: 70px;
+    line-height: 22px
+}
+
+.book-btn {
+    margin-top: 5px
+}
+
+.book-btn button {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px
+}
+
+.post-list {
+    float: left;
+    width: 250px;
+    height: 600px;
+    background-color: rgb(237, 246, 255)
+}
+.post-list div{
+    height: 60px;
+    line-height: 60px;
+    font-size: 17px
+}
+.post-list div i{
+    margin-left: 20px
+}
+.post-list div:hover {
+    width: 100%;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(142, 195, 250)
+}
+
+.post-items {
+    float: left;
+    margin-left: 30px;
+    margin-top: 30px
+}

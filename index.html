@@ -1,0 +1,466 @@
+<html>
+
+<head>
+    <title> 留学demo</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+
+
+<body style="background-color: white">
+<!-- top -->
+<div class="layui-row top">
+    <div class="content">
+        <!-- 提示操作 -->
+        <div class="layui-row tip">
+            <ul>
+                <li><a href="{{url('login')}}">登录</a></li>
+                <li><a href="{{url('register')}}">注册</a></li>
+                <li><a href="javascript:;">联系我们</a></li>
+            </ul>
+        </div>
+        <!-- logo+搜索 -->
+        <div class="layui-row" style="">
+            <div class="logo layui-col-xs6"></div>
+            <form class="search layui-col-xs3 layui-col-xs-offset3" style="margin-top: 30px">
+                <input type="submit" value="搜　索" style="float: right"/>
+                <input type="text" name="search" style="float: right"/>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- nav -->
+<div class="layui-row nav">
+    <div class="content">
+        <ul>
+            <li><a href="./desktop.html">桌面共享</a></li>
+        </ul>
+    </div>
+</div>
+<!-- container -->
+<div id="app" class="content" style="padding-top:20px;padding-bottom:20px;">
+    <!--会议界面-->
+    <div class="layui-row"
+         style="height: 800px;background-color:rgb(255, 255, 255);border: 2px solid rgb(206, 206, 206);border-radius: 3px;">
+        <!--会议成员及聊天框-->
+        <div class="layui-col-xs3" style="height: 100%">
+            <!--会议成员及文档-->
+            <div style="border: 2px solid rgb(206, 206, 206);">
+                <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="height:400px">
+                    <ul class="layui-tab-title" style="text-align: center">
+                        <li class="layui-this">在线用户</li>
+                    </ul>
+                    <div class="layui-tab-content" style="padding-left: 40px;margin-top:  10px">
+                        <div class="layui-tab-item layui-show">
+                            <ul style="line-height: 30px">
+                                <li v-for="(user,index) in onlineUsers">
+                                    这是一个用户
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--聊天-->
+            <div style="height:375px;border: 2px solid rgb(206, 206, 206);">
+                <div style="">
+                    <ul v-for="(message,index) in messages">
+                        <li>这是聊天的内容</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <!--会议功能选项及视频-->
+        <div class="layui-col-xs9" style="height: 800px">
+            <div class="layui-row"
+                 style="height: 52px;line-height: 52px;border-bottom:2px solid rgb(206, 206, 206)">
+                <ul style="margin-left: 50px;text-align: center">
+                    <li style="">
+                        <i class="layui-icon layui-icon-user" style="font-size: 25px;float: left;"></i>
+                        <div style="height:50px;line-height: 15px;width:80px;float: left;margin-left: 10px;margin-top: 10px;text-align:center;">
+                            <p>会议编号：<br>123</p></div>
+                    </li>
+                </ul>
+            </div>
+            <div style="height: 500px;border-bottom:2px solid rgb(206, 206, 206)">
+                <section class="make-center">
+
+                    <div id="videos-container" style="margin: 20px 0;"></div>
+
+                    <div id="room-urls"
+                    ></div>
+                </section>
+            </div>
+            <div class="layui-row">
+                <div class="meeting-biaoqing">
+                    <ul>
+                        <li><i class="layui-icon layui-icon-face-smile"></i></li>
+                        <li style="margin-left: 10px"><i class="layui-icon layui-icon-voice"></i></li>
+                        <li style="margin-left: 10px"><i class="layui-icon layui-icon-headset"></i></li>
+                        <li style="margin-left: 10px"><i class="layui-icon layui-icon-file"></i></li>
+                        <li style="margin-left: 10px"><i class="layui-icon layui-icon-more"></i></li>
+                    </ul>
+                </div>
+                <textarea id="textarea-message-context" type="text"
+                          style="float: left;width: 99.8%;height: 188px;background-color:transparent;border:0;"></textarea>
+                <button id="btn-send-chat" class="meeting-btn-send">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn-zixun">
+    <p>智<br>能<br>咨<br>询</p>
+</button>
+
+
+
+<script src="/dist/RTCMultiConnection.min.js"></script>
+<script src="/node_modules/webrtc-adapter/out/adapter.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<!-- custom layout for HTML5 audio/video elements -->
+<link rel="stylesheet" href="/dev/getHTMLMediaElement.css">
+<script src="/dev/getHTMLMediaElement.js"></script>
+
+<script src="/node_modules/recordrtc/RecordRTC.js"></script>
+<script>
+    // ......................................................
+    // .......................UI Code........................
+    // ......................................................
+    var roomId = '{{$roomId}}';
+    var roomState = '{{$state}}';
+
+    //定时获取在线人数
+    window.setInterval(function () {
+        axios.get("{{url('online')}}")
+            .then(function (response) {
+                vm.onlineUsers = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, 3000);
+
+    window.onload = function () {
+        connection.openOrJoin(roomId, function (isRoomExist, roomid, error) {
+            if (error) {
+                disableInputButtons(true);
+                alert(error);
+            } else if (connection.isInitiator === true) {
+
+                // if room doesn't exist, it means that current user will create the room
+                showRoomURL(roomid);
+            }
+            //本人上线通知后台
+            axios.get("{{url('up',$user['id'])}}" + '?vid=' + connection.userid)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        });
+
+    }
+
+    var connection = new RTCMultiConnection();
+
+    // by default, socket.io server is assumed to be deployed on your own URL
+    connection.socketURL = '/';
+
+    // comment-out below line if you do not have your own socket.io server
+    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+    connection.socketMessageEvent = 'video-conference-demo';
+
+    connection.session = {
+        audio: true,
+        video: true,
+        data: true
+    };
+
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: true
+    };
+
+    connection.videosContainer = document.getElementById('videos-container');
+    connection.onUserStatusChanged = function (event) {
+        console.log(event.status);
+        if (event.status === 'offline') {
+            //通知下线
+            axios.get("{{url('down')}}" + '/' + event.userid)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+    };
+    connection.onmessage = function (event) {
+        console.log(event.data);
+        if (event.data.checkmark_id) {
+            vm.messages.push({
+                name: event.data.checkmark_id,
+                context: event.data.chatMessage
+            });
+        }
+    };
+
+    document.getElementById('btn-send-chat').onclick = function () {
+        var checkmark_id = '{{$user['
+        account
+        ']}}';
+        var chatMessage = document.getElementById('textarea-message-context').value;
+
+        appendChatMessage(chatMessage, checkmark_id);
+
+        connection.send({
+            chatMessage: chatMessage,
+            checkmark_id: checkmark_id
+        });
+
+        connection.send({
+            typing: false
+        });
+        document.getElementById('textarea-message-context').value = '';
+    };
+
+    function appendChatMessage(message, name) {
+        vm.messages.push({
+            name: name,
+            context: message
+        });
+    }
+
+    connection.onstream = function (event) {
+        var existing = document.getElementById(event.streamid);
+        if (existing && existing.parentNode) {
+            existing.parentNode.removeChild(existing);
+        }
+
+        event.mediaElement.removeAttribute('src');
+        event.mediaElement.removeAttribute('srcObject');
+        event.mediaElement.muted = true;
+        event.mediaElement.volume = 0;
+
+        var video = document.createElement('video');
+
+        try {
+            video.setAttributeNode(document.createAttribute('autoplay'));
+            video.setAttributeNode(document.createAttribute('playsinline'));
+        } catch (e) {
+            video.setAttribute('autoplay', true);
+            video.setAttribute('playsinline', true);
+        }
+
+        if (event.type === 'local') {
+            video.volume = 0;
+            try {
+                video.setAttributeNode(document.createAttribute('muted'));
+            } catch (e) {
+                video.setAttribute('muted', true);
+            }
+        }
+        video.srcObject = event.stream;
+
+        var width = parseInt(connection.videosContainer.clientWidth / 3) - 20;
+        var mediaElement = getHTMLMediaElement(video, {
+            title: event.userid,
+            buttons: ['full-screen'],
+            width: width,
+            showOnMouseEnter: false
+        });
+
+        connection.videosContainer.appendChild(mediaElement);
+
+        setTimeout(function () {
+            mediaElement.media.play();
+        }, 5000);
+
+        mediaElement.id = event.streamid;
+
+        // to keep room-id in cache
+        localStorage.setItem(connection.socketMessageEvent, connection.sessionid);
+
+        chkRecordConference.parentNode.style.display = 'none';
+
+        if (chkRecordConference.checked === true) {
+            btnStopRecording.style.display = 'inline-block';
+            recordingStatus.style.display = 'inline-block';
+
+            var recorder = connection.recorder;
+            if (!recorder) {
+                recorder = RecordRTC([event.stream], {
+                    type: 'video'
+                });
+                recorder.startRecording();
+                connection.recorder = recorder;
+            } else {
+                recorder.getInternalRecorder().addStreams([event.stream]);
+            }
+
+            if (!connection.recorder.streams) {
+                connection.recorder.streams = [];
+            }
+
+            connection.recorder.streams.push(event.stream);
+            recordingStatus.innerHTML = 'Recording ' + connection.recorder.streams.length + ' streams';
+        }
+
+        if (event.type === 'local') {
+            connection.socket.on('disconnect', function () {
+                if (!connection.getAllParticipants().length) {
+                    location.reload();
+                }
+            });
+        }
+    };
+
+    var recordingStatus = document.getElementById('recording-status');
+    var chkRecordConference = document.getElementById('record-entire-conference');
+    var btnStopRecording = document.getElementById('btn-stop-recording');
+    btnStopRecording.onclick = function () {
+        var recorder = connection.recorder;
+        if (!recorder) return alert('No recorder found.');
+        recorder.stopRecording(function () {
+            var blob = recorder.getBlob();
+            invokeSaveAsDialog(blob);
+
+            connection.recorder = null;
+            btnStopRecording.style.display = 'none';
+            recordingStatus.style.display = 'none';
+            chkRecordConference.parentNode.style.display = 'inline-block';
+        });
+    };
+
+    connection.onstreamended = function (event) {
+        var mediaElement = document.getElementById(event.streamid);
+        if (mediaElement) {
+            mediaElement.parentNode.removeChild(mediaElement);
+        }
+    };
+
+    connection.onMediaError = function (e) {
+        if (e.message === 'Concurrent mic process limit.') {
+            if (DetectRTC.audioInputDevices.length <= 1) {
+                alert('Please select external microphone. Check github issue number 483.');
+                return;
+            }
+
+            var secondaryMic = DetectRTC.audioInputDevices[1].deviceId;
+            connection.mediaConstraints.audio = {
+                deviceId: secondaryMic
+            };
+
+            connection.join(connection.sessionid);
+        }
+    };
+
+    // ..................................
+    // ALL below scripts are redundant!!!
+    // ..................................
+
+    function disableInputButtons(enable) {
+        document.getElementById('room-id').onkeyup();
+
+        document.getElementById('open-or-join-room').disabled = !enable;
+        document.getElementById('open-room').disabled = !enable;
+        document.getElementById('join-room').disabled = !enable;
+        document.getElementById('room-id').disabled = !enable;
+    }
+
+    // ......................................................
+    // ......................Handling Room-ID................
+    // ......................................................
+
+    function showRoomURL(roomid) {
+        var roomHashURL = '#' + roomid;
+        var roomQueryStringURL = '?roomid=' + roomid;
+
+        var html = '';
+        //
+        // html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
+        // html += '<br>';
+        // html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+
+        var roomURLsDiv = document.getElementById('room-urls');
+        roomURLsDiv.innerHTML = html;
+
+        roomURLsDiv.style.display = 'block';
+    }
+
+    (function () {
+        var params = {},
+            r = /([^&=]+)=?([^&]*)/g;
+
+        function d(s) {
+            return decodeURIComponent(s.replace(/\+/g, ' '));
+        }
+
+        var match, search = window.location.search;
+        while (match = r.exec(search.substring(1)))
+            params[d(match[1])] = d(match[2]);
+        window.params = params;
+    })();
+
+    var roomid = '';
+    if (localStorage.getItem(connection.socketMessageEvent)) {
+        roomid = localStorage.getItem(connection.socketMessageEvent);
+    } else {
+        roomid = connection.token();
+    }
+
+    var txtRoomId = document.getElementById('room-id');
+    txtRoomId.value = roomid;
+    txtRoomId.onkeyup = txtRoomId.oninput = txtRoomId.onpaste = function () {
+        localStorage.setItem(connection.socketMessageEvent, document.getElementById('room-id').value);
+    };
+
+    var hashString = location.hash.replace('#', '');
+    if (hashString.length && hashString.indexOf('comment-') == 0) {
+        hashString = '';
+    }
+
+    var roomid = params.roomid;
+    if (!roomid && hashString.length) {
+        roomid = hashString;
+    }
+
+    if (roomid && roomid.length) {
+        document.getElementById('room-id').value = roomid;
+        localStorage.setItem(connection.socketMessageEvent, roomid);
+
+        // auto-join-room
+        (function reCheckRoomPresence() {
+            connection.checkPresence(roomid, function (isRoomExist) {
+                if (isRoomExist) {
+                    connection.join(roomid);
+                    return;
+                }
+
+                setTimeout(reCheckRoomPresence, 5000);
+            });
+        })();
+
+        disableInputButtons();
+    }
+
+    // detect 2G
+    if (navigator.connection &&
+        navigator.connection.type === 'cellular' &&
+        navigator.connection.downlinkMax <= 0.115) {
+        alert('2G is not supported. Please use a better internet service.');
+    }
+</script>
+<script src="/js/common.js"></script>
+</body>
+
+</html>
+
+
+
+

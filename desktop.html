@@ -1,0 +1,369 @@
+<html>
+
+<head>
+    <title> 留学demo</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+</head>
+
+
+<body style="background-color: white">
+<!-- top -->
+<div class="layui-row top">
+    <div class="content">
+        <!-- 提示操作 -->
+        <div class="layui-row tip">
+            <ul>
+                <li><a href="{{url('login')}}">登录</a></li>
+                <li><a href="{{url('register')}}">注册</a></li>
+                <li><a href="javascript:;">联系我们</a></li>
+            </ul>
+        </div>
+        <!-- logo+搜索 -->
+        <div class="layui-row" style="">
+            <div class="logo layui-col-xs6"></div>
+            <form class="search layui-col-xs3 layui-col-xs-offset3" style="margin-top: 30px">
+                <input type="submit" value="搜　索" style="float: right"/>
+                <input type="text" name="search" style="float: right"/>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- nav -->
+<div class="layui-row nav">
+    <div class="content">
+        <ul>
+            <li><a href="./index.html">视频会议</a></li>
+        </ul>
+    </div>
+</div>
+<!-- container -->
+<div id="app" class="content" style="padding-top:20px;padding-bottom:20px;">
+    <!--会议界面-->
+    <div class="layui-row"
+         style="height: 900px;background-color:rgb(255, 255, 255);border: 2px solid rgb(206, 206, 206);border-radius: 3px;">
+        <div class="layui-col-xs9">
+            <!--直播画面-->
+            <div
+                    style="height: 600px;border-bottom:2px solid rgb(206, 206, 206);border-right:2px solid rgb(206, 206, 206)">
+                <section class="experiment">
+                    <section class="hide-after-join" style="text-align: center;">
+                        <input type="text" id="room-name" placeholder="Enter "
+                               style="width: 80%; text-align: center; display: none;">
+                        <button id="share-screen" class="platform-btn setup" style="float: none;">点击授课</button>
+                    </section>
+
+                    <!-- local/remote videos container -->
+                    <div id="videos-container-s">
+
+                    </div>
+
+                    <section id="unique-token" style="display: none; text-align: center; padding: 20px;"></section>
+                </section>
+            </div>
+            <!--讲师及课程信息-->
+            <div style="height: 300px;border-right:2px solid rgb(206, 206, 206);">
+                <div class="layui-tab" style="margin: 0;">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">讲师介绍</li>
+                        <li>课程信息</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <!--讲师简介-->
+                            <div class="clearfix">
+                                <div class="layui-row">
+                                    <div style="float: left;"><img src="./images/class-teacher1.jpg" alt=""
+                                                                   style="height:120px;">
+                                    </div>
+                                    <div
+                                            style="float: left;padding:0px 30px 20px 30px;font-size: 16px;font-weight: 500">
+                                        <p>讲师姓名：Rose</p>
+                                        <p>讲师职称：教授</p>
+                                        <p>研究领域：计算机科学</p>
+                                    </div>
+                                </div>
+                                <div style="padding:20px 10px 20px 10px;">
+                                    <p style="color:rgb(90, 90, 90)">讲师简介：</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <!--课程简介-->
+                            <div class="clearfix">
+                                <div class="layui-row">
+                                    <div style="float: left;"><img src="./images/class_demo.jpg" alt=""
+                                                                   style="width:150px;height:120px;">
+                                    </div>
+                                    <div
+                                            style="float: left;padding:0px 30px 20px 30px;font-size: 16px;font-weight: 500">
+                                        <p>课程名称：</p>
+                                        <p>课程长度：</p>
+                                        <p>开课时间：</p>
+                                        <p>主讲讲师：</p>
+                                    </div>
+                                </div>
+                                <div style="padding:20px 10px 20px 10px;">
+                                    <p style="color:rgb(90, 90, 90)">课程简介：</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--学员聊天-->
+        <div class="layui-col-xs3">
+            <div style="height: 50px;line-height:50px;text-align:center;font-size:16px;border-bottom: 2px solid rgb(206, 206, 206);">
+                聊天讨论
+            </div>
+            <!--聊天信息-->
+            <div style="height: 548px;border-bottom: 2px solid rgb(206, 206, 206);"></div>
+            <div style="height:40px;border-bottom: 1px solid rgb(206, 206, 206);padding: 0 10px 0 10px">
+                <button class="layui-btn layui-btn-primary"
+                        style="height: 30px;line-height: 30px;text-align:center;margin-top: 5px">举手提问
+                </button>
+            </div>
+            <div>
+                        <textarea type="text"
+                                  style=" resize:none;float: left;width: 99.8%;height: 255px;background-color:transparent;border:0;"></textarea>
+                <button class="meeting-btn-send">发送</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<button class="btn-zixun">
+    <p>智<br>能<br>咨<br>询</p>
+</button>
+
+
+</body>
+<script src="https://www.webrtc-experiment.com/socket.io.js"></script>
+<script src="https://www.webrtc-experiment.com/DetectRTC.js"></script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="https://www.webrtc-experiment.com/CodecsHandler.js"></script>
+<script src="https://www.webrtc-experiment.com/BandwidthHandler.js"></script>
+<script src="https://www.webrtc-experiment.com/IceServersHandler.js"></script>
+<script src="https://www.webrtc-experiment.com/Pluginfree-Screen-Sharing/conference.js"></script>
+<script>
+    if (!location.hash.replace('#', '').length) {
+        location.href = location.href.split('#')[0] + '#' + (Math.random() * 100).toString().replace('.', '');
+        location.reload();
+    }
+</script>
+
+<script>
+    // Muaz Khan     - https://github.com/muaz-khan
+    // MIT License   - https://www.webrtc-experiment.com/licence/
+    // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/Pluginfree-Screen-Sharing
+
+    var config = {
+        // via: https://github.com/muaz-khan/WebRTC-Experiment/tree/master/socketio-over-nodejs
+        openSocket: function (config) {
+
+            // var SIGNALING_SERVER = 'http://localhost:8888/';
+            var SIGNALING_SERVER = 'https://socketio-over-nodejs2.herokuapp.com:443/';
+            config.channel = config.channel || location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
+            var sender = Math.round(Math.random() * 999999999) + 999999999;
+
+            io.connect(SIGNALING_SERVER).emit('new-channel', {
+                channel: config.channel,
+                sender: sender
+            });
+
+            var socket = io.connect(SIGNALING_SERVER + config.channel);
+            socket.channel = config.channel;
+            socket.on('connect', function () {
+                console.log('xshaitt');
+                console.log(config);
+                if (config.callback) config.callback(socket);
+            });
+
+            socket.send = function (message) {
+                socket.emit('message', {
+                    sender: sender,
+                    data: message
+                });
+            };
+
+            socket.on('message', config.onmessage);
+        },
+        onmessage: function (message) {
+            console.log(message);
+            console.log('xsh1');
+        },
+        onRemoteStream: function (media) {
+            if (isbroadcaster) return;
+
+            var video = media.video;
+            videosContainer.insertBefore(video, videosContainer.firstChild);
+            rotateVideo(video);
+
+            document.querySelector('.hide-after-join').style.display = 'none';
+        },
+        onRoomFound: function (room) {
+            if (isbroadcaster) return;
+
+            conferenceUI.joinRoom({
+                roomToken: room.roomToken,
+                joinUser: room.broadcaster
+            });
+
+            document.querySelector('.hide-after-join').innerHTML = '<img src="https://www.webrtc-experiment.com/images/key-press.gif" style="margint-top:10px; width:50%;" />';
+        },
+        onNewParticipant: function (numberOfParticipants) {
+            var text = numberOfParticipants + ' users are viewing your screen!';
+
+            if (numberOfParticipants <= 0) {
+                text = 'No one is viewing your screen YET.';
+            } else if (numberOfParticipants == 1) {
+                text = 'Only one user is viewing your screen!';
+            }
+
+            document.title = text;
+            showErrorMessage(document.title, 'green');
+        },
+        oniceconnectionstatechange: function (state) {
+            var text = '';
+
+            if (state == 'closed' || state == 'disconnected') {
+                text = 'One of the participants just left.';
+                document.title = text;
+                showErrorMessage(document.title);
+            }
+
+            if (state == 'failed') {
+                text = 'Failed to bypass Firewall rules. It seems that target user did not receive your screen. Please ask him reload the page and try again.';
+                document.title = text;
+                showErrorMessage(document.title);
+            }
+
+            if (state == 'connected' || state == 'completed') {
+                text = 'A user successfully received your screen.';
+                document.title = text;
+                showErrorMessage(document.title, 'green');
+            }
+
+            if (state == 'new' || state == 'checking') {
+                text = 'Someone is trying to join you.';
+                document.title = text;
+                showErrorMessage(document.title, 'green');
+            }
+        }
+    };
+
+    function showErrorMessage(error, color) {
+        var errorMessage = document.querySelector('#logs-message');
+        errorMessage.style.color = color || 'red';
+        errorMessage.innerHTML = error;
+        errorMessage.style.display = 'block';
+    }
+
+    function getDisplayMediaError(error) {
+        if (location.protocol === 'http:') {
+            showErrorMessage('Please test this WebRTC experiment on HTTPS.');
+        } else {
+            showErrorMessage(error.toString());
+        }
+    }
+
+    function captureUserMedia(callback) {
+        var video = document.createElement('video');
+        video.muted = true;
+        video.volume = 0;
+        try {
+            video.setAttributeNode(document.createAttribute('autoplay'));
+            video.setAttributeNode(document.createAttribute('playsinline'));
+            video.setAttributeNode(document.createAttribute('controls'));
+        } catch (e) {
+            video.setAttribute('autoplay', true);
+            video.setAttribute('playsinline', true);
+            video.setAttribute('controls', true);
+        }
+
+        if (navigator.getDisplayMedia || navigator.mediaDevices.getDisplayMedia) {
+            function onGettingSteam(stream) {
+                video.srcObject = stream;
+                videosContainer.insertBefore(video, videosContainer.firstChild);
+
+                addStreamStopListener(stream, function () {
+                    location.reload();
+                });
+
+                config.attachStream = stream;
+                callback && callback();
+                rotateVideo(video);
+
+                addStreamStopListener(stream, function () {
+                    location.reload();
+                });
+
+                document.querySelector('.hide-after-join').style.display = 'none';
+            }
+
+            if (navigator.mediaDevices.getDisplayMedia) {
+                navigator.mediaDevices.getDisplayMedia({video: true}).then(stream => {
+                    onGettingSteam(stream);
+                }, getDisplayMediaError).catch(getDisplayMediaError);
+            } else if (navigator.getDisplayMedia) {
+                navigator.getDisplayMedia({video: true}).then(stream => {
+                    onGettingSteam(stream);
+                }, getDisplayMediaError).catch(getDisplayMediaError);
+            }
+        } else {
+            if (DetectRTC.browser.name === 'Chrome') {
+                if (DetectRTC.browser.version == 71) {
+                    showErrorMessage('Please enable "Experimental WebPlatform" flag via chrome://flags.');
+                } else if (DetectRTC.browser.version < 71) {
+                    showErrorMessage('Please upgrade your Chrome browser.');
+                } else {
+                    showErrorMessage('Please make sure that you are not using Chrome on iOS.');
+                }
+            }
+
+            if (DetectRTC.browser.name === 'Firefox') {
+                showErrorMessage('Please upgrade your Firefox browser.');
+            }
+
+            if (DetectRTC.browser.name === 'Edge') {
+                showErrorMessage('Please upgrade your Edge browser.');
+            }
+
+            if (DetectRTC.browser.name === 'Safari') {
+                showErrorMessage('Safari does NOT supports getDisplayMedia API yet.');
+            }
+        }
+    }
+
+    /* on page load: get public rooms */
+    var conferenceUI = conference(config);
+
+    /* UI specific */
+    var videosContainer = document.getElementById("videos-container-s") || document.body;
+
+    document.getElementById('share-screen').onclick = function () {
+        var roomName = document.getElementById('room-name') || {};
+        roomName.disabled = true;
+        captureUserMedia(function () {
+            conferenceUI.createRoom({
+                roomName: (roomName.value || 'Anonymous') + ' shared his screen with you'
+            });
+        });
+        this.disabled = true;
+    };
+
+    function rotateVideo(video) {
+        video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
+        video.style['width'] = '100%';
+        setTimeout(function () {
+            video.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
+            video.style['width'] = '100%';
+        }, 1000);
+    }
+
+</script>
+</html>
